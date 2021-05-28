@@ -1,0 +1,164 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" Syntax highlighting
+if has("syntax")
+  syntax on
+endif
+
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+set background=dark
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Uncomment the following to have Vim load indentation rules and plugins
+" according to the detected filetype.
+filetype plugin indent on
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+set showcmd		" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set ignorecase		" Do case insensitive matching
+set smartcase		" Do smart case matching
+set incsearch		" Incremental search
+set autowrite		" Automatically save before commands like :next and :make
+set hidden		" Hide buffers when they are abandoned
+"set mouse=a		" Enable mouse usage (all modes)
+
+" My own vimscript below this line
+" Set colorscheme
+colorscheme ron
+" Highlight the line where the cursor is
+set cursorline
+
+set scrolloff=5 " Set scrolloff to 5 lines
+" Show status bar
+set laststatus=2
+" Show line number, relative, set numberwidth to 2
+set number relativenumber numberwidth=2
+" Textwidth to auto insert newline after and set autowrap to true
+set textwidth=100
+set wrap
+" Column 80 and 100 are highlighted
+set colorcolumn=80,100
+" Number of columns
+set columns=120
+" code folding with space bar
+nnoremap mf zfa}
+" Select till the end of line without the new line char
+nnoremap ,v ^v$h
+" Use F2 to execute ruby file
+autocmd FileType c noremap <F2> :!clear && make -C ~/albali/ -f ~/albali/Makefile<CR>
+autocmd FileType c noremap <F5> :!clear && ./bin/albali<CR> 
+autocmd FileType c noremap ,r zfa}
+autocmd FileType c set tabstop=2
+autocmd FileType ruby noremap <F2> :!clear && ruby %  
+autocmd FileType ruby noremap <F5> :!clear && ruby %<CR> 
+" Use space bar to select the current word
+nmap <space> viw
+
+" Toggle the word case 
+nnoremap mt viw~ea
+" Toggle the selection case 
+vnoremap mt ~
+
+" Use Up and Down arrow keys to move the line up or down
+nnoremap <Down> :m+<CR>
+nnoremap <Up> :m-2<CR>
+" Duplicate the current line
+nnoremap <C-Down> yyP
+nnoremap <C-Up> yyp
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+
+" Close the current buffer
+nnoremap ,w :bd<CR>
+" List all the buffers
+nnoremap <C-l> :ls<CR>
+
+" Cycle through buffers
+" next
+nnoremap <Tab> :bnext<CR>
+" previous
+nnoremap <S-Tab> :bprevious<CR>
+
+" Search and replace the visual selection
+vnoremap <C-h> y:%s/<C-r>"//gc
+
+" HTML closing tags auto append
+function CompleteTag()
+	if (&ft == "html" || &ft == "html.erb")
+		let cursorpos = getcurpos()
+		let line = line(".")
+		let regval = getreg('"') 
+		let var2 = join(["<", regval, ">"], "")
+		let var3 = join(["</", regval, ">"], "")
+		let var4 = join([var2, var3], "\n\n")
+		execute "normal a" . var4 . "\<Esc>"
+		call cursor(line + 1 , 1)
+	endif
+endfunction
+
+inoremap <C-h> <Esc>viwx:call CompleteTag()<CR>
+
+function IndentFile()
+	let line = line(".")
+	let cursorpos = getcurpos()
+	execute "normal ggV\<S-g>="
+	" call cursor(line, 1)
+	call setpos(".", cursorpos)
+endfunction
+
+nnoremap ,f :call IndentFile()<CR>
+
+" Vertical resize window
+nnoremap ,- :resize -5
+nnoremap ,+ :resize +5
+
+let g:netrw_liststyle=3
+let g:netrw_winsize=15
+
+nnoremap ,e :Explore<CR>
+inoremap ,s <Esc>:w<CR>
+nnoremap ,s :w<CR>
+" Move the char at cursor using arrow right
+nnoremap <Right> vxp
+
+" Insert 50 new lines at the bottom of the page
+inoremap ,a <Esc><S-g>A<C-m><Esc>50.50ki
+
+" Open .vimrc for editing
+nmap ,ve :edit ~/.vimrc<CR>
+
+" Source vimrc
+nnoremap ,vs :source ~/.vimrc<CR>
+" Formatting options
+set fo-=pj1nawqrct
+
+" Goto end of current line
+noremap L <Esc>$
+" Goto start of current line
+noremap H <Esc>^
+
+" Scroll up 
+" map ;e <C-b>
+" map ;d <C-d>
+" Scroll down
+" map ;b <C-b>
+" map ;y <C-y>
+
+set tabstop=8
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+" Highlight the current line in gray
+hi CursorLine term=underline cterm=underline ctermbg=DarkGray guibg=Grey40
+
+" Scroll window to place current line at the top of the screen
+map <C-k> zt
+" Scroll window to place current line at the bottom of the screen
+map <C-j> zb
+" Scroll window to place current line at the bottom of the screen
+map <C-,> zz
