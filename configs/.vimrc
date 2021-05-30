@@ -162,3 +162,24 @@ map <C-k> zt
 map <C-j> zb
 " Scroll window to place current line at the bottom of the screen
 map <C-,> zz
+
+" Markdown file specific keybindings
+" h1, h2, h3, h4 -> set the line to corresponding header
+autocmd FileType markdown nnoremap <buffer> h1 <Esc>^i# <Esc> 
+autocmd FileType markdown nnoremap <buffer> h2 <Esc>^i## <Esc> 
+autocmd FileType markdown nnoremap <buffer> h3 <Esc>^i### <Esc> 
+autocmd FileType markdown nnoremap <buffer> h4 <Esc>^i#### <Esc> 
+" ,l -> make the current line a list item (prepend current line with a -)
+autocmd FileType markdown nnoremap <buffer> ,l <Esc>^i- <Esc>
+" ,c -> change the visual selection to a code block
+autocmd FileType markdown vnoremap <buffer> ,c c```<CR>```<Esc>P
+" ,b -> bold the current selection (on the same line) 
+autocmd FileType markdown vnoremap <buffer> ,b c**<Esc>pa**<Esc> 
+" ,i -> italicize the current selection (on the same line)
+autocmd FileType markdown vnoremap <buffer> ,i c*<Esc>pa*<Esc> 
+
+" set spellcheck to British English
+" setlocal spell spelllang=en_gb
+" setlocal hi SpellBad term=reverse cterm=reverse ctermbg=None guisp=None 
+
+
