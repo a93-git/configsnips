@@ -182,4 +182,62 @@ autocmd FileType markdown vnoremap <buffer> ,i c*<Esc>pa*<Esc>
 " setlocal spell spelllang=en_gb
 " setlocal hi SpellBad term=reverse cterm=reverse ctermbg=None guisp=None 
 
+" Comment shortcut based on filetypes
+autocmd FileType ruby nnoremap <buffer> <C-_> ^i# <Esc>
+autocmd FileType ruby inoremap <buffer> <C-_> <Esc>^i# <Esc>
+
+function VisualComment()
+    execute "normal \<Esc>^i# \<Esc>"
+endfunction
+autocmd FileType ruby vnoremap <buffer> <C-_> :call VisualComment()<CR>
+
+function VisualUnComment()       
+  execute "normal \<Esc>^xx\<Esc>"
+endfunction
+autocmd FileType ruby vnoremap <buffer> <C-S-_> :call VisualUnComment()<CR> 
+
+autocmd FileType ruby nnoremap <buffer> ,t ^xx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
