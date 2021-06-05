@@ -8,7 +8,7 @@ endif
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-set background=dark
+" set background=dark
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -154,7 +154,7 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 " Highlight the current line in gray
-hi CursorLine term=underline cterm=underline ctermbg=DarkGray guibg=Grey40
+hi CursorLine term=reverse cterm=reverse ctermbg=None guibg=Black
 
 " Scroll window to place current line at the top of the screen
 map <C-k> zt
@@ -198,17 +198,34 @@ autocmd FileType ruby vnoremap <buffer> <C-S-_> :call VisualUnComment()<CR>
 
 autocmd FileType ruby nnoremap <buffer> ,t ^xx
 
+" Add macros for Ruby to create if block, else block, unless block
+"autocmd FileType ruby inoremap ifblock<space> if ()<CR>elsif ()<CR>else<CR><Esc>3k$i
+autocmd FileType ruby iabbrev ifblock if ()<CR>elsif ()<CR>else<CR><Esc>3k$i
+" Add abbrs to create rescue block
+autocmd FileType ruby iabbrev rsc1 begin <CR>rescue <CR>ensure<CR>end<Esc>3k$a
+autocmd FileType ruby iabbrev rsc2 rescue <CR>ensure<CR>end<Esc>2k$a
+autocmd FileType ruby iabbrev rsc3 rescue <CR>end<Esc>k$a
+" Add abbrs to create class and modules
+autocmd FileType ruby iabbrev cls class <CR>end<Esc>k$a
+autocmd FileType ruby iabbrev mdl module <CR>end<Esc>k$a 
 
+" Add macro to create while, until, loop, beginwhile, beginuntil, for block
 
+" Tab through the tabs
+nnoremap ,<Tab> :tabnext
+nnoremap ,<S-Tab> :tabprev
 
+" Create new tab
+nnoremap ,t :tabnew
 
+" Save all and exit
+nnoremap ,q :wqa<CR>
 
+" Enter adds a new line
+nmap <CR> A<CR><Esc>
 
-
-
-
-
-
+" Seach the file for the word under cursor
+nnoremap f *
 
 
 
